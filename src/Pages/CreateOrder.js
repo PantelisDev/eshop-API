@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 function CreateOrder() {
-  const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [form, setForm] = useState({ userId: 1, orderDate: '' });
 
   useEffect(() => {
-    fetch('https://eshop-api-production-2a1c.up.railway.app/users')
-      .then(res => res.json())
-      .then(data => setUsers(data.data));
-
     fetch('https://eshop-api-production-2a1c.up.railway.app/products')
       .then(res => res.json())
       .then(data => setProducts(data.data));
@@ -29,7 +24,6 @@ function CreateOrder() {
   };
 
   const isSelected = (id) => selectedProducts.some(p => p.id === id);
-
   const total = selectedProducts.reduce((sum, p) => sum + p.price, 0).toFixed(2);
 
   const handleSubmit = async () => {
@@ -60,22 +54,12 @@ function CreateOrder() {
     <div>
       <div style={{ fontSize: '22px', fontWeight: '500', color: '#ffffff', marginBottom: '24px' }}>Create order</div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-
         <div style={{ background: '#2a2a2a', border: '1px solid #444444', borderRadius: '12px', padding: '24px' }}>
           <div style={{ fontSize: '16px', fontWeight: '500', color: '#ffffff', marginBottom: '20px' }}>Order details</div>
-
           <label style={labelStyle}>Customer username</label>
-          <input
-                 name="userName"
-                 type="text"
-                 placeholder="Enter username..."
-                 onChange={handleChange}
-                 style={inputStyle}
-          />
-
+          <input name="userName" type="text" placeholder="Enter username..." onChange={handleChange} style={inputStyle} />
           <label style={labelStyle}>Order date</label>
           <input name="orderDate" type="datetime-local" onChange={handleChange} style={inputStyle} />
-
           <div style={{ fontSize: '16px', fontWeight: '500', color: '#ffffff', margin: '8px 0 16px' }}>Select products</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {products.map(product => (
@@ -95,7 +79,6 @@ function CreateOrder() {
             ))}
           </div>
         </div>
-
         <div style={{ background: '#2a2a2a', border: '1px solid #444444', borderRadius: '12px', padding: '24px' }}>
           <div style={{ fontSize: '16px', fontWeight: '500', color: '#ffffff', marginBottom: '20px' }}>Order summary</div>
           <div style={{ background: '#333333', border: '1px solid #444444', borderRadius: '8px', padding: '16px' }}>
@@ -124,21 +107,12 @@ function CreateOrder() {
             cursor: 'pointer', marginTop: '16px'
           }}>Place order</button>
         </div>
-
       </div>
     </div>
   );
 }
 
-const labelStyle = {
-  fontSize: '13px', color: '#999999', display: 'block', marginBottom: '6px'
-};
-
-const inputStyle = {
-  width: '100%', padding: '10px 12px',
-  border: '1px solid #444444', borderRadius: '8px',
-  background: '#333333', color: '#ffffff',
-  fontSize: '14px', outline: 'none', marginBottom: '16px'
-};
+const labelStyle = { fontSize: '13px', color: '#999999', display: 'block', marginBottom: '6px' };
+const inputStyle = { width: '100%', padding: '10px 12px', border: '1px solid #444444', borderRadius: '8px', background: '#333333', color: '#ffffff', fontSize: '14px', outline: 'none', marginBottom: '16px' };
 
 export default CreateOrder;
