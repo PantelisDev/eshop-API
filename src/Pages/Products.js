@@ -11,11 +11,11 @@ function Products() {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:8080/products')
+    fetch('https://eshop-api-production-2a1c.up.railway.app/products')
       .then(res => res.json())
       .then(data => setProducts(data.data));
 
-    fetch('http://localhost:8080/users')
+    fetch('https://eshop-api-production-2a1c.up.railway.app/users')
       .then(res => res.json())
       .then(data => setUsers(data.data));
   }, []);
@@ -43,7 +43,7 @@ function Products() {
     if (!form.orderDate) { showError('Please select an order date!'); return; }
     if (selectedProducts.length === 0) { showError('Please select at least one product!'); return; }
 
-    const orderResponse = await fetch('http://localhost:8080/orders', {
+    const orderResponse = await fetch('https://eshop-api-production-2a1c.up.railway.app/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: user.id, orderDate: form.orderDate + ':00' })
@@ -52,7 +52,7 @@ function Products() {
     const orderId = orderData.data;
 
     for (const product of selectedProducts) {
-      await fetch('http://localhost:8080/order-items', {
+      await fetch('https://eshop-api-production-2a1c.up.railway.app/order-items', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderId, productId: product.id })

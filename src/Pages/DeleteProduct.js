@@ -4,14 +4,14 @@ function DeleteProduct() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/products')
+    fetch('https://eshop-api-production-2a1c.up.railway.app/products')
       .then(res => res.json())
       .then(data => setProducts(data.data));
   }, []);
 
   const handleDelete = (id, title) => {
     if (window.confirm('Are you sure you want to delete ' + title + '?')) {
-      fetch('http://localhost:8080/products/' + id, {
+      fetch('https://eshop-api-production-2a1c.up.railway.app/products/' + id, {
         method: 'DELETE'
       })
       .then(() => {

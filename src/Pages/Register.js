@@ -13,7 +13,7 @@ function Register() {
   });
 
   useEffect(() => {
-    fetch('http://localhost:8080/cities')
+    fetch('https://eshop-api-production-2a1c.up.railway.app/cities')
       .then(res => res.json())
       .then(data => setCities(data.data));
   }, []);
@@ -23,7 +23,7 @@ function Register() {
   };
 
   const handleSubmit = () => {
-    fetch('http://localhost:8080/users', {
+    fetch('https://eshop-api-production-2a1c.up.railway.app/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)

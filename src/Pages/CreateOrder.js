@@ -7,11 +7,11 @@ function CreateOrder() {
   const [form, setForm] = useState({ userId: 1, orderDate: '' });
 
   useEffect(() => {
-    fetch('http://localhost:8080/users')
+    fetch('https://eshop-api-production-2a1c.up.railway.app/users')
       .then(res => res.json())
       .then(data => setUsers(data.data));
 
-    fetch('http://localhost:8080/products')
+    fetch('https://eshop-api-production-2a1c.up.railway.app/products')
       .then(res => res.json())
       .then(data => setProducts(data.data));
   }, []);
@@ -33,7 +33,7 @@ function CreateOrder() {
   const total = selectedProducts.reduce((sum, p) => sum + p.price, 0).toFixed(2);
 
   const handleSubmit = async () => {
-    const orderResponse = await fetch('http://localhost:8080/orders', {
+    const orderResponse = await fetch('https://eshop-api-production-2a1c.up.railway.app/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -45,7 +45,7 @@ function CreateOrder() {
     const orderId = orderData.data;
 
     for (const product of selectedProducts) {
-      await fetch('http://localhost:8080/order-items', {
+      await fetch('https://eshop-api-production-2a1c.up.railway.app/order-items', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderId, productId: product.id })

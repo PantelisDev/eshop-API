@@ -4,7 +4,7 @@ function Orders() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/orders')
+    fetch('https://eshop-api-production-2a1c.up.railway.app/orders')
       .then(res => res.json())
       .then(data => setOrders(data.data));
   }, []);
