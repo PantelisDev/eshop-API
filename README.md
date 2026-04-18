@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+This project is a full-stack e-commerce web application in it's early development.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Link to site:
+https://eshop-frontend-weld.vercel.app/
 
-## Available Scripts
+Backend:
 
-In the project directory, you can run:
+Java Spring Boot
+Spring Data JPA / Hibernate
+MySQL Database
+Swagger UI
+Frontend:
 
-### `npm start`
+React
+CSS
+Canvas API
+Features:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Functional Order placement with product selection list
+Functional User registration form
+Modern UI animated background
+Animated popups
+Order validation
+Product catalog
+Order history
+Responsive UI
+Coming Soon:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+product Information
+Payment integration
+Customer reviews
+Chat support
+Sign in
+To get started:
 
-### `npm test`
+Install MySQL and create database eshop_db
+Run the SQL script in /database/eshop_db.sql
+Update application.properties with your DB credentials
+Run EshopApiApplication.java
+API runs on http://localhost:8080
+Swagger UI at http://localhost:8080/swagger-ui/index.html
+Frontend:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+cd eshop-frontend
+npm install
+npm start
+App runs on http://localhost:3000
+Αυτό το project είναι μια full-stack e-shop demo εφαρμογή Περιέχει:
 
-### `npm run build`
+Backend:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Java Spring Boot
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Spring Data JPA / Hibernate
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+MySQL Βάση Δεδομένων
 
-### `npm run eject`
+Swagger UI
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Frontend
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+React
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+CSS
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Canvas API
 
-## Learn More
+Χαρακτηριστικά:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Λειτουργική τοποθέτηση παραγγελίας με λίστα επιλογής προϊόντων
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Λειτουργική φόρμα εγγραφής χρηστών
 
-### Code Splitting
+Σύγχρονο UI με κινούμενο φόντο
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Κινούμενα popups
 
-### Analyzing the Bundle Size
+Επαλήθευση παραγγελίας
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Κατάλογος προϊόντων
 
-### Making a Progressive Web App
+Ιστορικό παραγγελιών
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Responsive UI
 
-### Advanced Configuration
+Σε εξέλιξη:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Πληροφορίες προϊόντος
+Ενσωμάτωση πληρωμών
+Κριτικές πελατών
+Υποστήριξη chat
+Σύνδεση χρήστη
