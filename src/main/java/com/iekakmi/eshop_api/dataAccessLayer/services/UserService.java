@@ -1,5 +1,4 @@
 package com.iekakmi.eshop_api.dataAccessLayer.services;
-
 import com.iekakmi.eshop_api.domainLayer.repositories.UserRepository;
 import com.iekakmi.eshop_api.domainLayer.models.entities.User;
 import com.iekakmi.eshop_api.dataAccessLayer.models.UserDto;
@@ -10,18 +9,15 @@ import org.springframework.stereotype.Service;
 import jakarta.validation.Valid;
 import java.util.stream.Collectors;
 import java.util.List;
-
 @Service
 @Validated
 public class UserService
 {
 	private final UserRepository userRepository;
-
 	public UserService(UserRepository userRepository)
 	{
 		this.userRepository = userRepository;
 	}
-
 	public List<UserDto> getUsers()
 	{
 		return userRepository.findAll().stream()
@@ -34,11 +30,11 @@ public class UserService
 					dto.setAddress(u.getAddress());
 					dto.setPhoneNo(u.getPhoneNo());
 					dto.setUserName(u.getUserName());
+					dto.setPassWord(u.getPassWord());
 					return dto;
 				})
 				.collect(Collectors.toList());
 	}
-
 	public UserDto getUserById(int id)
 	{
 		User u = userRepository.findById(id)
@@ -51,9 +47,9 @@ public class UserService
 		dto.setAddress(u.getAddress());
 		dto.setPhoneNo(u.getPhoneNo());
 		dto.setUserName(u.getUserName());
+		dto.setPassWord(u.getPassWord());
 		return dto;
 	}
-
 	@Transactional
 	public int createUser(@Valid UserDto u)
 	{
@@ -68,7 +64,6 @@ public class UserService
 		User saved = userRepository.save(entity);
 		return saved.getId();
 	}
-
 	@Transactional
 	public UserDto updateUser(@Valid UserDto u)
 	{
@@ -83,7 +78,6 @@ public class UserService
 		userRepository.save(entity);
 		return u;
 	}
-
 	@Transactional
 	public void deleteUser(int id)
 	{
