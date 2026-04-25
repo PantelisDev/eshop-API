@@ -83,4 +83,20 @@ public class UserService
 	{
 		userRepository.deleteById(id);
 	}
+	
+	public UserDto login(String userName, String passWord) {
+	    return userRepository.findAll().stream()
+	        .filter(u -> u.getUserName().equals(userName) && u.getPassWord().equals(passWord))
+	        .map(u -> {
+	            UserDto dto = new UserDto();
+	            dto.setId(u.getId());
+	            dto.setFirstName(u.getFirstName());
+	            dto.setLastName(u.getLastName());
+	            dto.setUserName(u.getUserName());
+	            dto.setPassWord(u.getPassWord());
+	            return dto;
+	        })
+	        .findFirst()
+	        .orElse(null);
+	}
 }
