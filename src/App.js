@@ -17,6 +17,7 @@ function Navbar({ loggedInUser, setLoggedInUser }) {
       borderBottom: '1px solid #444444',
       background: '#1a1a1a'
     }}>
+      {/* Left side - nav links */}
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
         {[
           { path: '/', label: 'Home' },
@@ -35,7 +36,10 @@ function Navbar({ loggedInUser, setLoggedInUser }) {
             transition: 'all 0.6s ease'
           }}>{link.label}</Link>
         ))}
+      </div>
 
+      {/* Right side - sign in or user */}
+      <div>
         {loggedInUser ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontSize: '13px', color: '#ffffff' }}>
