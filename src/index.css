@@ -4,6 +4,12 @@
   padding: 0;
 }
 
+html, body, #root {
+  background-color: #1a1a1a !important;
+  min-height: 100%;
+  width: 100%;
+}
+
 body {
   background-color: #1a1a1a;
   color: #ffffff;
