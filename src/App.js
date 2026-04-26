@@ -45,7 +45,7 @@ function Navbar({ loggedInUser, setLoggedInUser }) {
             <span style={{ fontSize: '13px', color: '#ffffff' }}>
               👋 {loggedInUser.firstName}
             </span>
-            <button onClick={() => setLoggedInUser(null)} style={{
+            <button onClick={() => { setLoggedInUser(null); setShowSignOut(false); window.location.href = '/signin'; }} style={{
               fontSize: '13px', padding: '5px 10px',
               borderRadius: '8px', border: '1px solid #e53935',
               background: 'transparent', color: '#e53935',
