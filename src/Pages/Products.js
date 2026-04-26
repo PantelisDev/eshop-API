@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Products() {
+function Products({ loggedInUser }) {
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
   const [hoveredId, setHoveredId] = useState(null);
@@ -37,9 +37,9 @@ function Products() {
   const total = selectedProducts.reduce((sum, p) => sum + p.price, 0).toFixed(2);
 
   const handleSubmit = async () => {
-    const user = users.find(u => u.userName.toLowerCase() === userName.trim().toLowerCase());
+    const user = loggedInUser || users.find(u => u.userName.toLowerCase() === userName.trim().toLowerCase());
     if (!user) { showError('User not found!'); return; }
-    if (user.passWord !== form.password) { showError('Invalid password!'); return; }
+    if (!loggedInUser && user.passWord !== form.password) { showError('Invalid password!'); return; }
     if (!form.orderDate) { showError('Please select an order date!'); return; }
     if (selectedProducts.length === 0) { showError('Please select at least one product!'); return; }
 
@@ -75,7 +75,7 @@ function Products() {
         @keyframes float3 { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(15px,-15px); } }
         @keyframes popIn { from { opacity:0; transform:translateX(-50%) translateY(-48%); } to { opacity:1; transform:translateX(-50%) translateY(-50%); } }
         @keyframes progress { from { transform:scaleX(1); } to { transform:scaleX(0); } }
-        .product-card { transition: border-color 0.3s ease, transform 0.2s ease; }
+        .product-card { transition: border-color 0.3s ease; }
         .add-btn { transition: all 0.2s ease; }
         .add-btn:hover { background: #22c55e !important; color: #ffffff !important; }
       `}</style>
@@ -125,12 +125,12 @@ function Products() {
               onMouseEnter={() => setHoveredId(product.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
-              <div style={{ width: '100%', aspectRatio: '1', background: '#222222', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-               <img
-                   src={product.imageUrl}
-                   alt={product.title}
-                  style={{ width: '100%', height: '210px', objectFit: 'cover', display: 'block' }}
-                   onError={(e) => e.target.src = 'https://cdn-icons-png.flaticon.com/512/2529/2529396.png'}
+              <div style={{ width: '100%', height: '160px', background: '#2a2a2a', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <img
+                  src={product.imageUrl}
+                  alt={product.title}
+                  style={{ width: '100%', height: '160px', objectFit: 'contain', display: 'block', padding: '8px' }}
+                  onError={(e) => e.target.src = 'https://cdn-icons-png.flaticon.com/512/2529/2529396.png'}
                 />
               </div>
               <div style={{ padding: '12px' }}>
@@ -161,23 +161,31 @@ function Products() {
           <div style={{ background: 'rgba(42,42,42,0.85)', border: '1px solid #444444', borderRadius: '12px', padding: '24px', backdropFilter: 'blur(10px)' }}>
             <div style={{ fontSize: '16px', fontWeight: '500', color: '#ffffff', marginBottom: '20px' }}>Place an order</div>
 
-            <label style={labelStyle}>Customer username *</label>
-            <input
-              value={userName}
-              type="text"
-              placeholder="Enter username..."
-              onChange={(e) => {
-                setUserName(e.target.value);
-                const user = users.find(u => u.userName.toLowerCase() === e.target.value.trim().toLowerCase());
-                if (user) setForm({ ...form, userId: user.id });
-                else setForm({ ...form, userId: null });
-              }}
-              style={{ ...inputStyle, border: userName && !form.userId ? '1px solid #e53935' : '1px solid #444444' }}
-            />
-            {userName && !form.userId && <div style={{ fontSize: '12px', color: '#e53935', marginTop: '-12px', marginBottom: '12px' }}>User not found</div>}
+            {loggedInUser ? (
+              <div style={{ fontSize: '13px', color: '#999999', marginBottom: '16px', padding: '12px', background: '#333333', borderRadius: '8px', border: '1px solid #444444' }}>
+                Ordering as <span style={{ color: '#ffffff', fontWeight: '500' }}>{loggedInUser.firstName} {loggedInUser.lastName}</span>
+              </div>
+            ) : (
+              <>
+                <label style={labelStyle}>Customer username *</label>
+                <input
+                  value={userName}
+                  type="text"
+                  placeholder="Enter username..."
+                  onChange={(e) => {
+                    setUserName(e.target.value);
+                    const user = users.find(u => u.userName.toLowerCase() === e.target.value.trim().toLowerCase());
+                    if (user) setForm({ ...form, userId: user.id });
+                    else setForm({ ...form, userId: null });
+                  }}
+                  style={{ ...inputStyle, border: userName && !form.userId ? '1px solid #e53935' : '1px solid #444444' }}
+                />
+                {userName && !form.userId && <div style={{ fontSize: '12px', color: '#e53935', marginTop: '-12px', marginBottom: '12px' }}>User not found</div>}
 
-            <label style={labelStyle}>Password *</label>
-            <input value={form.password} type="password" placeholder="Enter password..." onChange={(e) => setForm({ ...form, password: e.target.value })} style={inputStyle} />
+                <label style={labelStyle}>Password *</label>
+                <input value={form.password} type="password" placeholder="Enter password..." onChange={(e) => setForm({ ...form, password: e.target.value })} style={inputStyle} />
+              </>
+            )}
 
             <label style={labelStyle}>Order date *</label>
             <input type="datetime-local" onChange={(e) => setForm({ ...form, orderDate: e.target.value })} style={inputStyle} />
