@@ -17,7 +17,6 @@ function Navbar({ loggedInUser, setLoggedInUser }) {
       borderBottom: '1px solid #444444',
       background: '#1a1a1a'
     }}>
-      <div style={{ fontSize: '16px', fontWeight: '500', color: '#ffffff' }}>🛍 Eshop</div>
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
         {[
           { path: '/', label: 'Home' },
