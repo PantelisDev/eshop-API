@@ -13,6 +13,12 @@ html, body, #root {
   width: 100%;
 }
 
+#root {
+  background-color: #1a1a1a;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 body {
   background-color: #1a1a1a;
   color: #ffffff;
