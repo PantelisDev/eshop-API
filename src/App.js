@@ -72,7 +72,7 @@ function App() {
     <BrowserRouter>
       <div style={{ background: '#1a1a1a', minHeight: '100vh' }}>
         <Navbar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
-        <div style={{ padding: '24px' }}>
+        <div>
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/products" element={<Products loggedInUser={loggedInUser} />} />
