@@ -113,8 +113,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/products" element={<Products loggedInUser={loggedInUser} />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/orders" element={<Orders loggedInUser={loggedInUser} />} />           
             <Route path="/create-order" element={<CreateOrder />} />
             <Route path="/signin" element={<SignIn setLoggedInUser={setLoggedInUser} />} />
           </Routes>
