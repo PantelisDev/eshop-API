@@ -22,6 +22,11 @@ public class UserDto
 	@NotEmpty(message = "Username cannot be empty")
 	private String userName;
 
+	@NotNull(message = "Password cannot be null")
+	@NotEmpty(message = "Password cannot be empty")
+	@Size(min = 8, message = "Password must be at least 8 characters")
+	@Pattern(regexp = ".*[A-Z].*", message = "Password must contain at least one uppercase letter")
+	@Pattern(regexp = ".*[0-9].*", message = "Password must contain at least one number")
 	private String passWord;
 
 	public int getId() { return id; }
