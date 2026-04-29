@@ -9,6 +9,7 @@ function Products({ loggedInUser }) {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [userName, setUserName] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // NEW: Search state
 
   useEffect(() => {
     fetch('https://eshop-api-production-2a1c.up.railway.app/products')
@@ -35,6 +36,12 @@ function Products({ loggedInUser }) {
 
   const isSelected = (id) => selectedProducts.some(p => p.id === id);
   const total = selectedProducts.reduce((sum, p) => sum + p.price, 0).toFixed(2);
+
+  // NEW: Filter products based on search query
+  const filteredProducts = products.filter(product => 
+    product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    product.categoryName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSubmit = async () => {
     const user = loggedInUser || users.find(u => u.userName.toLowerCase() === userName.trim().toLowerCase());
@@ -78,6 +85,7 @@ function Products({ loggedInUser }) {
         .product-card { transition: border-color 0.3s ease; }
         .add-btn { transition: all 0.2s ease; }
         .add-btn:hover { background: #22c55e !important; color: #ffffff !important; }
+        .search-input:focus { border-color: #f97316 !important; }
       `}</style>
 
       {/* Orbs */}
@@ -109,9 +117,75 @@ function Products({ loggedInUser }) {
       )}
 
       <div style={{ position: 'relative', zIndex: 1, padding: '24px' }}>
-        <div style={{ fontSize: '22px', fontWeight: '500', marginBottom: '20px', color: '#ffffff' }}>Products</div>
+        {/* Header with Title and Search Bar */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', gap: '16px', flexWrap: 'wrap' }}>
+          <div style={{ fontSize: '22px', fontWeight: '500', color: '#ffffff' }}>Products</div>
+          
+          {/* Search Bar */}
+          <div style={{ position: 'relative', flex: '1', maxWidth: '400px' }}>
+            <svg 
+              style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+              width="16" 
+              height="16" 
+              viewBox="0 0 16 16" 
+              fill="none"
+            >
+              <circle cx="6.5" cy="6.5" r="5" stroke="#999999" strokeWidth="1.5"/>
+              <path d="M10 10l4 4" stroke="#999999" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px 12px 10px 36px',
+                border: '1px solid #444444',
+                borderRadius: '8px',
+                background: '#2a2a2a',
+                color: '#ffffff',
+                fontSize: '14px',
+                outline: 'none',
+                transition: 'border-color 0.3s ease'
+              }}
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                style={{
+                  position: 'absolute',
+                  right: '8px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#999999',
+                  cursor: 'pointer',
+                  fontSize: '16px',
+                  padding: '4px 8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Results count */}
+        {searchQuery && (
+          <div style={{ fontSize: '13px', color: '#999999', marginBottom: '12px' }}>
+            Found {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
+          </div>
+        )}
+
+        {/* Product Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '12px' }}>
-          {products.map(product => (
+          {filteredProducts.map(product => (
             <div
               key={product.id}
               className="product-card"
@@ -150,12 +224,20 @@ function Products({ loggedInUser }) {
                     cursor: 'pointer'
                   }}
                 >
-                  {isSelected(product.id) ? '✓ Added' : 'Add to order'}
+                  {isSelected(product.id) ? '✓ Added' : 'Add to cart'}
                 </button>
               </div>
             </div>
           ))}
         </div>
+
+        {/* No results message */}
+        {filteredProducts.length === 0 && searchQuery && (
+          <div style={{ textAlign: 'center', padding: '48px 24px', color: '#999999' }}>
+            <div style={{ fontSize: '16px', marginBottom: '8px' }}>No products found</div>
+            <div style={{ fontSize: '13px' }}>Try a different search term</div>
+          </div>
+        )}
 
         <div className="order-section" style={{ marginTop: '40px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
           <div style={{ background: 'rgba(42,42,42,0.85)', border: '1px solid #444444', borderRadius: '12px', padding: '24px', backdropFilter: 'blur(10px)' }}>
