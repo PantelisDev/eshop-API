@@ -3,21 +3,27 @@ import com.iekakmi.eshop_api.domainLayer.repositories.UserRepository;
 import com.iekakmi.eshop_api.domainLayer.models.entities.User;
 import com.iekakmi.eshop_api.dataAccessLayer.models.UserDto;
 import com.iekakmi.eshop_api.dataAccessLayer.models.exceptions.EntityNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.stereotype.Service;
 import jakarta.validation.Valid;
 import java.util.stream.Collectors;
 import java.util.List;
+
 @Service
 @Validated
 public class UserService
 {
 	private final UserRepository userRepository;
-	public UserService(UserRepository userRepository)
+	private final PasswordEncoder passwordEncoder;
+
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder)
 	{
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
+
 	public List<UserDto> getUsers()
 	{
 		return userRepository.findAll().stream()
@@ -35,6 +41,7 @@ public class UserService
 				})
 				.collect(Collectors.toList());
 	}
+
 	public UserDto getUserById(int id)
 	{
 		User u = userRepository.findById(id)
@@ -50,6 +57,7 @@ public class UserService
 		dto.setPassWord(u.getPassWord());
 		return dto;
 	}
+
 	@Transactional
 	public int createUser(@Valid UserDto u)
 	{
@@ -60,10 +68,11 @@ public class UserService
 		entity.setAddress(u.getAddress());
 		entity.setPhoneNo(u.getPhoneNo());
 		entity.setUserName(u.getUserName());
-		entity.setPassWord(u.getPassWord());
+		entity.setPassWord(passwordEncoder.encode(u.getPassWord()));
 		User saved = userRepository.save(entity);
 		return saved.getId();
 	}
+
 	@Transactional
 	public UserDto updateUser(@Valid UserDto u)
 	{
@@ -78,25 +87,26 @@ public class UserService
 		userRepository.save(entity);
 		return u;
 	}
+
 	@Transactional
 	public void deleteUser(int id)
 	{
 		userRepository.deleteById(id);
 	}
-	
+
 	public UserDto login(String userName, String passWord) {
-	    return userRepository.findAll().stream()
-	        .filter(u -> u.getUserName().equals(userName) && u.getPassWord().equals(passWord))
-	        .map(u -> {
-	            UserDto dto = new UserDto();
-	            dto.setId(u.getId());
-	            dto.setFirstName(u.getFirstName());
-	            dto.setLastName(u.getLastName());
-	            dto.setUserName(u.getUserName());
-	            dto.setPassWord(u.getPassWord());
-	            return dto;
-	        })
-	        .findFirst()
-	        .orElse(null);
+		return userRepository.findAll().stream()
+			.filter(u -> u.getUserName().equals(userName) && passwordEncoder.matches(passWord, u.getPassWord()))
+			.map(u -> {
+				UserDto dto = new UserDto();
+				dto.setId(u.getId());
+				dto.setFirstName(u.getFirstName());
+				dto.setLastName(u.getLastName());
+				dto.setUserName(u.getUserName());
+				dto.setPassWord(u.getPassWord());
+				return dto;
+			})
+			.findFirst()
+			.orElse(null);
 	}
 }
