@@ -111,9 +111,10 @@ function App() {
         <Navbar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
         <div>
           <Routes>
-            <Route path="/" element={<Landing />} />
+            <Route path="/"element={<Landing />} />
             <Route path="/products" element={<Products loggedInUser={loggedInUser} />} />
-            <Route path="/orders" element={<Orders loggedInUser={loggedInUser} />} />           
+            <Route path="/orders" element={<Orders loggedInUser={loggedInUser} />} />    
+            <Route path="/register" element={<Register />} />       
             <Route path="/create-order" element={<CreateOrder />} />
             <Route path="/signin" element={<SignIn setLoggedInUser={setLoggedInUser} />} />
           </Routes>
